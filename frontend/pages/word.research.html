@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analysis - Progetto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel = "stylesheet" href = "../style/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="word.research.html" class="active">RICERCA PER FRASE</a>
+        <a href="theme.html">RICERCA PER TEMA</a>
+        <a href="hashtag.html">RICERCA PER HASHTAG</a>
+        <a href="chart.html">CLASSIFICA</a>
+    </div>
+
+
+    <div class="welcome-container">
+        <div class="jumbotron">
+            <h1 class="display-4">RICERCA PER PAROLA/FRASE</h1>
+            <h4>Potrai inserire una parola o una frase e poi cliccare sui
+                pulsanti qui sotto per le diverse opzioni</h4>
+            <form id="sentiment-form" class="mt-3">
+                <input type="text" id="barra-ricerca"
+                    class="form-control form-control-lg"
+                    placeholder="Inserisci una parola o un tema" required>
+                <button id="bottone-di-ricerca"
+                    class="btn btn-primary btn-block btn-lg" id>Analizza</button>
+            </form>
+            <div id="result">
+                <!--DEVO INSERIRE I DATI CHE MI VENGONO RESTITUITI-->
+            </div>
+        </div>
+    </div>
+    <script>
+        function fetchSentimentData() {
+            const inputElement = document.getElementById("barra-ricerca");
+            const resultElement = document.getElementById("result");
+            const searchTerm = inputElement.value;
+            const apiUrl = `https://api.example.com/sentiment?searchTerm=${searchTerm}`;
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Manipola i dati ricevuti e mostrali nella pagina
+                    resultElement.innerHTML = `<p>Il sentiment di "${searchTerm}" è ${data.sentiment}</p>`;
+                })
+                .catch(error => {
+                    resultElement.innerHTML = "<p>Si è verificato un errore durante la richiesta dei dati.</p>";
+                });
+        }
+        const sentimentForm = document.getElementById("sentiment-form");
+        sentimentForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            fetchSentimentData();
+        });
+    </script>
+</body>
+
+<footer>
+    &copy; 2023 Sentiment Analysis - Progetto - TUTTI I DIRITTI RISERVATI
+</footer>
