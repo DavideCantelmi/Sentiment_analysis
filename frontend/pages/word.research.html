@@ -46,7 +46,7 @@
               <h5 class="card-title">Analisi Sentimentale</h5>
               <p class="card-text" id="searchTermDisplay"></p>
               <p class="card-text" id="sentimentDisplay"></p>
-              <div class="progress mt-3" style="height: 25px;">
+              <!-- <div class="progress mt-3" style="height: 25px;">
                 <div
                   class="progress-bar"
                   role="progressbar"
@@ -57,7 +57,7 @@
                 >
                   50%
                 </div>
-              </div>
+              </div> -->
               <p class="card-text" id="confidenceDisplay"></p>
               <p class="card-text" id="scoreDisplay"></p>
             </div>
@@ -111,6 +111,23 @@
             confidenceDisplay.innerHTML = `<p style="font-size: 1.5em;">Confidence: <strong>${data.confidence.toFixed(
               2
             )}</strong></p>`;
+
+            const confidenceProgressBar = `
+            <div class = "progress mt-3" style="height: 25px;">
+              <div
+              class="progress-bar"
+              role="progressbar"
+              style="width: ${data.confidence}%; background-color: #4CAF50;"
+              aria-valuenow="${data.confidence}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              >
+              ${data.confidence.toFixed(2)}%
+              </div>
+            </div>`;
+
+            sentimentDisplay.innerHTML += confidenceProgressBar;
+
 
             const score = data.score;
             let scoreColor = "";
