@@ -14,9 +14,10 @@ app.get('/', (req, res) => {
 
 app.get('/sentiment', async (req, res) => {
   try {
-    const { text } = req.query
+    const text = req.query.searchTerm
     const sentiment = await sentimentFetch(text)
-    res.json(sentiment)
+    console.log('sentiment', sentiment)
+    res.send(sentiment)
   } catch (error) {
     console.error(error)
   }

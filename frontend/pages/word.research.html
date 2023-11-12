@@ -1,62 +1,183 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Sentiment Analysis - Progetto</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel = "stylesheet" href = "../style/style.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="../style/style.css" />
+  </head>
 
-<body>
+  <body>
     <div class="navbar">
-        <a href="word.research.html" class="active">RICERCA PER FRASE</a>
-        <a href="theme.html">RICERCA PER TEMA</a>
-        <a href="hashtag.html">RICERCA PER HASHTAG</a>
-        <a href="chart.html">CLASSIFICA</a>
+      <a href="word.research.html" class="active">RICERCA PER FRASE</a>
+      <a href="theme.html">RICERCA PER TEMA</a>
+      <a href="hashtag.html">RICERCA PER HASHTAG</a>
+      <a href="chart.html">CLASSIFICA</a>
     </div>
-
 
     <div class="welcome-container">
-        <div class="jumbotron">
-            <h1 class="display-4">RICERCA PER PAROLA/FRASE</h1>
-            <h4>Potrai inserire una parola o una frase e poi cliccare sui
-                pulsanti qui sotto per le diverse opzioni</h4>
-            <form id="sentiment-form" class="mt-3">
-                <input type="text" id="barra-ricerca"
-                    class="form-control form-control-lg"
-                    placeholder="Inserisci una parola o un tema" required>
-                <button id="bottone-di-ricerca"
-                    class="btn btn-primary btn-block btn-lg" id>Analizza</button>
-            </form>
-            <div id="result">
-                <!--DEVO INSERIRE I DATI CHE MI VENGONO RESTITUITI-->
+      <div class="jumbotron">
+        <h1 class="display-4">RICERCA PER PAROLA/FRASE</h1>
+        <h4>
+          Potrai inserire una parola o una frase e poi cliccare sui pulsanti qui
+          sotto per le diverse opzioni
+        </h4>
+        <form id="sentiment-form" class="mt-3">
+          <input
+            type="text"
+            id="barra-ricerca"
+            class="form-control form-control-lg"
+            placeholder="Inserisci una parola o un tema"
+            required
+          />
+          <button
+            id="bottone-di-ricerca"
+            class="btn btn-primary btn-block btn-lg"
+          >
+            Analizza
+          </button>
+        </form>
+        <div id="result" style="display: none" class="mt-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Analisi Sentimentale</h5>
+              <p class="card-text" id="searchTermDisplay"></p>
+              <p class="card-text" id="sentimentDisplay"></p>
+              <div class="progress mt-3" style="height: 25px;">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 50%; background-color: #4CAF50;"
+                  aria-valuenow="50"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  50%
+                </div>
+              </div>
+              <p class="card-text" id="confidenceDisplay"></p>
+              <p class="card-text" id="scoreDisplay"></p>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    <script>
-        function fetchSentimentData() {
-            const inputElement = document.getElementById("barra-ricerca");
-            const resultElement = document.getElementById("result");
-            const searchTerm = inputElement.value;
-            const apiUrl = `https://api.example.com/sentiment?searchTerm=${searchTerm}`;
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    // Manipola i dati ricevuti e mostrali nella pagina
-                    resultElement.innerHTML = `<p>Il sentiment di "${searchTerm}" è ${data.sentiment}</p>`;
-                })
-                .catch(error => {
-                    resultElement.innerHTML = "<p>Si è verificato un errore durante la richiesta dei dati.</p>";
-                });
-        }
-        const sentimentForm = document.getElementById("sentiment-form");
-        sentimentForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            fetchSentimentData();
-        });
-    </script>
-</body>
 
-<footer>
-    &copy; 2023 Sentiment Analysis - Progetto - TUTTI I DIRITTI RISERVATI
-</footer>
+    <script>
+      function fetchSentimentData() {
+        const inputElement = document.getElementById("barra-ricerca");
+        const resultElement = document.getElementById("result");
+        const searchTerm = inputElement.value;
+        const apiUrl = `http://localhost:3030/sentiment?searchTerm=${searchTerm}`;
+        const searchTermDisplay = document.getElementById("searchTermDisplay");
+        const sentimentDisplay = document.getElementById("sentimentDisplay");
+        const scoreDisplay = document.getElementById("scoreDisplay");
+        const confidenceDisplay = document.getElementById("confidenceDisplay");
+
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            searchTermDisplay.innerHTML = `<p style="font-size: 1.5em;">Parola/Frase: <strong>${searchTerm}</strong></p>`;
+
+            resultElement.style.display = "block";
+
+            switch (data.sentiment.toLowerCase()) {
+              case "positive":
+                sentimentDisplay.style.color = "green";
+                sentimentDisplay.innerHTML =
+                  '<p style="font-size: 1.5em;">Sentiment: Positivo 😊</p>';
+                break;
+              case "negative":
+                sentimentDisplay.style.color = "red";
+                sentimentDisplay.innerHTML =
+                  '<p style="font-size: 1.5em;">Sentiment: Negativo 😞</p>';
+                break;
+              case "neutral":
+                sentimentDisplay.style.color = "#ffd700";
+                sentimentDisplay.innerHTML =
+                  '<p style="font-size: 1.5em;">Sentiment: Neutrale 😌</p>';
+                break;
+              default:
+                // Handle other cases if needed
+                break;
+            }
+
+            const languageEmoji = getLanguageEmoji(data.language.toLowerCase());
+            sentimentDisplay.style.color = "black";
+            sentimentDisplay.innerHTML += `<p style="font-size: 1.5em;">Lingua: ${languageEmoji}</p>`;
+            confidenceDisplay.innerHTML = `<p style="font-size: 1.5em;">Confidence: <strong>${data.confidence.toFixed(
+              2
+            )}</strong></p>`;
+
+            const score = data.score;
+            let scoreColor = "";
+            if (score >= 0 && score < 30) {
+              scoreColor = "red"; // Low score
+            } else if (score >= 30 && score < 70) {
+              scoreColor = "yellow"; 
+            } else {
+              scoreColor = "green"; 
+            }
+
+            scoreDisplay.innerHTML = `<p style="font-size: 1.5em; color: ${scoreColor};">Score: <strong>${score}</strong></p>`;
+          })
+          .catch((error) => {
+            resultElement.innerHTML =
+              "<p>Si è verificato un errore durante la richiesta dei dati.</p>";
+          });
+      }
+
+      const sentimentForm = document.getElementById("sentiment-form");
+      sentimentForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        fetchSentimentData();
+      });
+
+      function getLanguageEmoji(language) {
+        const languageMap = {
+          en: "🇺🇸", // English
+          it: "🇮🇹", // Italian
+          fr: "🇫🇷", // French
+          es: "🇪🇸", // Spanish
+          de: "🇩🇪", // German
+          ja: "🇯🇵", // Japanese
+          zh: "🇨🇳", // Chinese
+          ko: "🇰🇷", // Korean
+          ar: "🇸🇦", // Arabic
+          ru: "🇷🇺", // Russian
+          hi: "🇮🇳", // Hindi
+          pt: "🇵🇹", // Portuguese
+          nl: "🇳🇱", // Dutch
+          sv: "🇸🇪", // Swedish
+          tr: "🇹🇷", // Turkish
+          he: "🇮🇱", // Hebrew
+          th: "🇹🇭", // Thai
+          el: "🇬🇷", // Greek
+          pl: "🇵🇱", // Polish
+          cs: "🇨🇿", // Czech
+          hu: "🇭🇺", // Hungarian
+          fi: "🇫🇮", // Finnish
+          da: "🇩🇰", // Danish
+          no: "🇳🇴", // Norwegian
+          id: "🇮🇩", // Indonesian
+          vi: "🇻🇳", // Vietnamese
+          ro: "🇷🇴", // Romanian
+          sk: "🇸🇰", // Slovak
+          bg: "🇧🇬", // Bulgarian
+          uk: "🇺🇦", // Ukrainian
+          hr: "🇭🇷", // Croatian
+          sr: "🇷🇸", // Serbian
+        };
+
+        return languageMap[language] || "🏴";
+      }
+    </script>
+
+    <footer>
+      &copy; 2023 Sentiment Analysis - Progetto - TUTTI I DIRITTI RISERVATI
+    </footer>
+  </body>
+</html>
