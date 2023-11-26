@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="it">
-    <head>
-        <meta charset="UTF-8">
-        <title>Sentiment Analysis - Progetto</title>
-        <link rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../style/style.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analysis - Progetto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../style/style.css">
+</head>
 
-    <body>
-        <div class="navbar">
-            <a href="word.research.html">RICERCA PER FRASE</a>
-            <a href="theme.html">RICERCA PER TEMA</a>
-            <a href="hashtag.html">RICERCA PER HASHTAG</a>
-            <a href="chart.html" class="active">CLASSIFICA</a>
-        </div>
+<body>
+    <div class="navbar">
+        <a href="word.research.html">RICERCA PER FRASE</a>
+        <a href="hashtag.html">RICERCA PER HASHTAG</a>
+        <a href="chart.html" class="active">CLASSIFICA</a>
+    </div>
 
-        <div class="welcome-container">
-            <div class="jumbotron">
-                <h1 class = "display-4">CLASSIFICA</h1>
-                <h4>Classifiche delle parole sentimentalmente
-                    positive e negative
-                </h4>
-                <form id="sentiment-form" class="mt-3">
-                    <input type="text" id="barra-ricerca" class="form-control form-control-lg"
-                        placeholder="Inserisci una parola o un tema" required>
-                    <button id="bottone-di-ricerca" class="btn btn-primary btn-block btn-lg" id="">Analizza</button>
-                </form>
-                <div id="result">
-                    <!--DEVO INSERIRE I DATI CHE MI VENGONO RESTITUITI-->
+    <div class="welcome-container">
+        <div class="jumbotron">
+            <h1 class="display-4">CLASSIFICA</h1>
+            <h4>Classifiche delle parole sentimentalmente positive e negative</h4>
+            <form id="sentiment-form" class="mt-3">
+                <textarea id="frasi" class="form-control form-control-lg" rows="4"
+                    placeholder="Inserisci le frasi qui, una per riga" required></textarea>
+                <div class="mt-3"> <!-- Contenitore aggiuntivo per il bottone -->
+                    <button type="button" onclick="analyzeSentiment()" class="btn btn-primary btn-block btn-lg">Analizza</button>
                 </div>
+            </form>
+            <div id="result">
+                <!-- Qui verranno visualizzati i risultati -->
             </div>
         </div>
-    </body>
+    </div>
 
     <footer>
         &copy; 2023 Sentiment Analysis - Progetto - TUTTI I DIRITTI RISERVATI
     </footer>
+
+    <script src = "../js/chart.populate.js"></script>
+</body>
+</html>

@@ -2,7 +2,10 @@ const configuration = require('./configuration')
 const sentimentFetch = async (text) => {
   const myHeaders = new Headers()
   myHeaders.append('apikey', configuration.api.apiKey)
-
+  console.log('text', text)
+  if (text.startsWith('#')) {
+    text = text.substring(1)
+  }
   const raw = JSON.stringify(text)
   console.log('la parola è: ', raw)
   const requestOptions = {

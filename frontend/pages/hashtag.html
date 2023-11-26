@@ -10,7 +10,6 @@
 <body>
     <div class="navbar">
         <a href="word.research.html">RICERCA PER FRASE</a>
-        <a href="theme.html">RICERCA PER TEMA</a>
         <a href="hashtag.html" class="active">RICERCA PER HASHTAG</a>
         <a href="chart.html">CLASSIFICA</a>
     </div>
@@ -18,22 +17,54 @@
 
     <div class="welcome-container">
         <div class="jumbotron">
-            <h1 class="display-4">RICERCA PER HASHTAG</h1>
-            <h4>Potrai inserire un hashtag poi cliccare e poi cercare il sentiment qui sotto</h4>
-            <form id="sentiment-form" class="mt-3">
-                <input type="text" id="barra-ricerca"
-                    class="form-control form-control-lg"
-                    placeholder="Inserisci una parola o un tema" required>
-                <button id="bottone-di-ricerca"
-                    class="btn btn-primary btn-block btn-lg" id>Analizza</button>
-            </form>
-            <div id="result">
-                <!--DEVO INSERIRE I DATI CHE MI VENGONO RESTITUITI-->
+          <h1 class="display-4">RICERCA PER HASHTAG</h1>
+          <h4>
+            Inserisci una Hashtag per vedere l'analisi sentimentale
+          </h4>
+          <form id="sentiment-form" class="mt-3">
+            <input
+              type="text"
+              id="barra-ricerca"
+              class="form-control form-control-lg"
+              placeholder="Inserisci una hashtag"
+              required
+            />
+            <button
+              id="bottone-di-ricerca"
+              class="btn btn-primary btn-block btn-lg"
+            >
+              Analizza
+            </button>
+          </form>
+          <div id="result" style="display: none" class="mt-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Analisi Sentimentale</h5>
+                <p class="card-text" id="searchTermDisplay"></p>
+                <p class="card-text" id="sentimentDisplay"></p>
+                <!-- <div class="progress mt-3" style="height: 25px;">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: 50%; background-color: #4CAF50;"
+                    aria-valuenow="50"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    50%
+                  </div>
+                </div> -->
+                <p class="card-text" id="confidenceDisplay"></p>
+                <p class="card-text" id="scoreDisplay"></p>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 </body>
 
 <footer>
     &copy; 2023 Sentiment Analysis - Progetto - TUTTI I DIRITTI RISERVATI
 </footer>
+<script src="../js/hashtag.populate.js"></script>
+</html>

@@ -93,3 +93,54 @@ footer {
     position: fixed;
     bottom: 0;
 }
+
+#result {
+    margin-top: 20px;
+}
+.result-section {
+    margin-bottom: 20px;
+}
+.result-list {
+    list-style: none;
+    padding: 0;
+}
+.result-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.result-list .score {
+    font-weight: bold;
+}
+.positive {
+    background-color: #d4edda; /* Verde sfumato */
+}
+.negative {
+    background-color: #f8d7da; /* Rosso sfumato */
+}
+.no-results {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#sentiment-form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#sentiment-form textarea {
+    resize: none; 
+}
+#sentiment-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+#sentiment-form button:hover {
+    background-color: #0056b3;
+}
