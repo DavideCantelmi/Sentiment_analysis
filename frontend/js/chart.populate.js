@@ -29,15 +29,27 @@ function displayResults (data) {
   const section = (title, words, className) => {
     if (words.length > 0) {
       return `<div class="result-section">
-                        <h3>${title}:</h3>
-                        <ul class="result-list">
-                            ${words.map(word => `<li class="${className}">${word.word} <span class="score">${word.score}</span></li>`).join('')}
-                        </ul>
-                    </div>`
+                <h3>${title}:</h3>
+                <ul class="result-list">
+                    ${words.map(word => `<li class="${className}">${word.word} <span class="score">${word.score}</span></li>`).join('')}
+                </ul>
+              </div>`
     }
-    return `<div class="no-results">Nessuna parola ${title.toLowerCase()}</div>`
+    return ''
   }
 
-  resultDiv.innerHTML += section('Parole Positive', positiveWords, 'positive')
-  resultDiv.innerHTML += section('Parole Negative', negativeWords, 'negative')
+  const positiveSection = section('Parole Positive', positiveWords, 'positive')
+  const negativeSection = section('Parole Negative', negativeWords, 'negative')
+
+  if (positiveSection) {
+    resultDiv.innerHTML += positiveSection
+  }
+
+  if (negativeSection) {
+    resultDiv.innerHTML += negativeSection
+  }
+
+  if (!positiveSection && !negativeSection) {
+    resultDiv.innerHTML = '<div class="no-results">Nessuna parola trovata</div>'
+  }
 }
