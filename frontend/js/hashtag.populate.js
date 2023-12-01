@@ -1,14 +1,24 @@
 function fetchSentimentData () {
   const inputElement = document.getElementById('barra-ricerca')
   const resultElement = document.getElementById('result')
-  let searchTerm = inputElement.value
+  let searchTerm = inputElement.value.trim()
   console.log('searchterm', searchTerm)
-  if (!searchTerm.startsWith('#')) {
-    resultElement.innerHTML = '<p>Il termine di ricerca deve iniziare con #</p>'
+
+  if (searchTerm === '') {
+    const errorMsg = 'Per favore inserisci un termine di ricerca.'
+    resultElement.innerHTML = `<p>${errorMsg}</p>`
+    alert(errorMsg) // Mostra un alert per l'errore
     return
-  } else {
-    searchTerm = searchTerm.substring(1)
   }
+
+  if (!searchTerm.startsWith('#')) {
+    const errorMsg = 'Il termine di ricerca deve iniziare con il simbolo #.'
+    resultElement.innerHTML = `<p>${errorMsg}</p>`
+    alert(errorMsg) // Mostra un alert per l'errore
+    return
+  }
+
+  searchTerm = searchTerm.substring(1)
   const apiUrl = `http://localhost:3030/sentiment?searchTerm=${searchTerm}`
   const searchTermDisplay = document.getElementById('searchTermDisplay')
   const sentimentDisplay = document.getElementById('sentimentDisplay')
