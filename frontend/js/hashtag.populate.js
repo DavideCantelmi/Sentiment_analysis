@@ -7,14 +7,14 @@ function fetchSentimentData () {
   if (searchTerm === '') {
     const errorMsg = 'Per favore inserisci un termine di ricerca.'
     resultElement.innerHTML = `<p>${errorMsg}</p>`
-    alert(errorMsg) // Mostra un alert per l'errore
+    alert(errorMsg)
     return
   }
 
   if (!searchTerm.startsWith('#')) {
     const errorMsg = 'Il termine di ricerca deve iniziare con il simbolo #.'
     resultElement.innerHTML = `<p>${errorMsg}</p>`
-    alert(errorMsg) // Mostra un alert per l'errore
+    alert(errorMsg)
     return
   }
 
